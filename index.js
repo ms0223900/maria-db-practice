@@ -1,6 +1,27 @@
-require("dotenv").config()
+const db = require('./db')
 
-const mariadb = require("mariadb")
+async function query(dbConnection) {
+    const SQL = "SELECT * FROM mydb.posts";
+    try {
+        const res = await dbConnection.query(SQL);
+        return res;
+    }catch (error) {
+        throw error;
+    }
+}
 
-console.log(mariadb)
-console.log(process.env.MARIA_DB_HOST)
+async function main() {
+    let conn;
+    conn = await db.pool.getConnection()
+    try {
+        const res = await query(conn)
+        console.log(res)
+    } catch (err) {
+        console.log("Error: ", err)
+    } finally {
+        console.log('final')
+        conn && conn.end()
+    }
+}
+
+main()
