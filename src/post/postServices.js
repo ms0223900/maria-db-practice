@@ -30,6 +30,24 @@ const addPostService = (dbConnection) => {
     })
 }
 
+const updatePostService = (dbConnection) => {
+    const repo = postRepo(
+        postMapper(dbConnection)
+    )
+    async function execute(id, title) {
+        // TODO, column checker?
+        if(!id) throw new Error('Id required!')
+        if(!title) throw new Error('title required')
+
+        const oldPost = await repo.findById(id)
+        const updatedPost = Post({ ...oldPost, title, })
+        const res = await repo.updatePost(updatedPost)
+        return res
+    }
+    return ({
+        execute,
+    })
+}
 
 module.exports = {
     getPostService,

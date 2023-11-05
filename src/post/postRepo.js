@@ -8,6 +8,14 @@ const postRepo = (mapper) => ({
             throw new Error(e)
         }
     },
+    async findById(id = 0) {
+        try {
+            const res = mapper.findPostById(id)
+            return res
+        } catch (e) {
+            throw new Error(e)
+        }
+    },
     async addPost(post = Post()) {
         try {
             const res = mapper.addPost(post)
@@ -15,8 +23,15 @@ const postRepo = (mapper) => ({
         } catch (e) {
             throw new Error(e)
         }
+    },
+    async updatePost(post = Post()) {
+        try {
+            const res = mapper.updatePost(post)
+            return res
+        } catch (e) {
+            throw new Error(e)
+        }
     }
-
 })
 
 module.exports = {postRepo};
