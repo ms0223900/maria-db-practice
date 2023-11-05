@@ -1,12 +1,12 @@
+const { postRepo } = require("./postRepo");
+const { postMapper } = require("./postMapper");
 const getPostService = (dbConnection) => {
+    const repo = postRepo(
+        postMapper(dbConnection)
+    )
     async function execute() {
-        const SQL = "SELECT * FROM mydb.posts";
-        try {
-            const res = await dbConnection.query(SQL);
-            return res;
-        }catch (error) {
-            throw error;
-        }
+        const res = await repo.getPosts()
+        return res
     }
     return ({
         execute,
