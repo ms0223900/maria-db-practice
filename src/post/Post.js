@@ -1,4 +1,4 @@
-const Post = ({ title }) => ({
+const Post = ({ title = '' }) => ({
     title
 })
 module.exports = { Post }
