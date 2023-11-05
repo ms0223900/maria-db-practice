@@ -1,4 +1,5 @@
-const Post = ({ title = '' }) => ({
+const Post = ({ id, title = '' }) => ({
+    id,
     title
 })
 

@@ -1,7 +1,7 @@
 
 
 const updatePostController = (app = require('express')(), service) => {
-    app.post('/post/:id', async (req, res) => {
+    app.put('/post/:id', async (req, res) => {
 
         try {
             const id = parseInt(req.params.id)
@@ -9,7 +9,7 @@ const updatePostController = (app = require('express')(), service) => {
                 title,
             } = req.body
            const updatedUser = await service.execute(id, title)
-           res.status(201).json(newUser)
+           res.status(201).json(updatedUser)
         } catch (e) {
             // TODO, better error handling
 

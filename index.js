@@ -11,6 +11,8 @@ const db = require('./db')
 const { getPostService } = require("./src/post/postServices");
 const { addPostController } = require("./src/post/addPostController");
 const { addPostService } = require("./src/post/postServices");
+const { updatePostController } = require("./src/post/updatePostController");
+const { updatePostService } = require("./src/post/postServices");
 
 const APP_PORT = 3000;
 
@@ -21,6 +23,7 @@ async function main() {
     try {
         getPostsController(app, getPostService(conn))
         addPostController(app, addPostService(conn))
+        updatePostController(app, updatePostService(conn))
     } catch (err) {
         console.log("Error: ", err)
     } finally {

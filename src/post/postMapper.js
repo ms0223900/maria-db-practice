@@ -26,16 +26,16 @@ const postMapper = (dbConnection) => ({
         const SQL = "SELECT * FROM mydb.posts WHERE id = ?";
         try {
             const res = await dbConnection.query(SQL, id);
-            return res;
+            return res[0];
         }catch (error) {
             throw error;
         }
     },
 
-    async findPostById(post) {
-        const SQL = "UPDATE mydb.post t SET t.title = ? WHERE t.id = ?";
+    async updatePost(post) {
+        const SQL = "UPDATE mydb.posts t SET t.title = ? WHERE t.id = ?";
         try {
-            const res = await dbConnection.query(SQL, post.title, post.id);
+            const res = await dbConnection.query(SQL, [post.title, post.id]);
             return res;
         }catch (error) {
             throw error;

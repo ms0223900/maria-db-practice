@@ -40,9 +40,10 @@ const updatePostService = (dbConnection) => {
         if(!title) throw new Error('title required')
 
         const oldPost = await repo.findById(id)
+        // console.log('old', oldPost)
         const updatedPost = Post({ ...oldPost, title, })
-        const res = await repo.updatePost(updatedPost)
-        return res
+        await repo.updatePost(updatedPost)
+        return updatedPost
     }
     return ({
         execute,
@@ -52,4 +53,5 @@ const updatePostService = (dbConnection) => {
 module.exports = {
     getPostService,
     addPostService,
+    updatePostService,
 }
