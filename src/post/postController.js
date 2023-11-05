@@ -1,3 +1,4 @@
+const { Post } = require("src/post/Post");
 
 
 const postController = (app = require('express')(), service) => {
@@ -14,6 +15,14 @@ const postController = (app = require('express')(), service) => {
         const {
             title,
         } = req.body
+
+        try {
+           const newUser = await service.execute({ title })
+           res.status(201).json(newUser)
+        } catch (e) {
+            // TODO, better error handling
+            res.status()
+        }
     })
 }
 module.exports = postController;
