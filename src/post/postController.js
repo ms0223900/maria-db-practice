@@ -1,9 +1,9 @@
 
 
-const postController = (app = require('express')()) => {
+const postController = (app = require('express')(), service) => {
     app.get('/posts', async (req, res) => {
-
-        res.send('hi')
+        const posts = await service.execute()
+        res.send(posts)
     })
 }
 module.exports = postController;
