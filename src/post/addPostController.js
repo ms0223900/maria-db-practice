@@ -12,7 +12,7 @@ const addPostController = (app = require('express')(), service) => {
         } catch (e) {
             // TODO, better error handling
 
-            res.status(400).json(e)
+            res.status(400).json(e.message || e)
         }
     })
 }

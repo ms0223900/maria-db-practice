@@ -14,7 +14,8 @@ const postMapper = (dbConnection) => ({
             "VALUES (?);";
         try {
             const res = await dbConnection.query(SQL, post.title);
-            dbConnection.save()
+            // dbConnection.save()
+            console.log('res', res, res.insertId)
             console.log('Add post success')
             return res;
         }catch (error) {
