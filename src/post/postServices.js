@@ -14,7 +14,7 @@ function columnChecker(keys = ['id'], rawData = {}) {
     }
 
     if(missedKeys.length > 0) {
-        throw new Error(`${missedKeys.join(', ')} required!`)
+        throw new Error(`${missedKeys.join(', ')} REQUIRED!!`)
     }
 }
 const getPostService = (dbConnection) => {
@@ -33,10 +33,10 @@ const addPostService = (dbConnection) => {
     const repo = postRepo(
         postMapper(dbConnection)
     )
-    async function execute(title) {
-        columnChecker(['title'], { title })
+    async function execute(title, description, content) {
+        columnChecker(['title', 'description', 'content'], { title, description, content })
 
-        const newPost = Post({ title })
+        const newPost = Post({ title, description, content })
         const res = await repo.addPost(newPost)
         return res
     }

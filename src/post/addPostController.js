@@ -6,8 +6,10 @@ const addPostController = (app = require('express')(), service) => {
         try {
             const {
                 title,
+                description,
+                content,
             } = req.body
-           const newId = await service.execute(title)
+           const newId = await service.execute(title, description, content)
             console.log('newId', newId)
            res.status(201).json(newId)
         } catch (e) {

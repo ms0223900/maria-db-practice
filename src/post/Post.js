@@ -1,6 +1,8 @@
-const Post = ({ id, title = '' }) => ({
+const Post = ({ id, title = '', description = '', content = '' }) => ({
     id,
-    title
+    title,
+    description,
+    content,
 })
 
 module.exports = { Post }
