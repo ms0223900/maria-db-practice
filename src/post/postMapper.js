@@ -18,9 +18,7 @@ const postMapper = (dbConnection) => ({
                 supportBigNumbers: true,
                 insertIdAsNumber: true,
             }, [post.title, post.description, post.content]);
-            // dbConnection.save()
-            console.log('res', res, res.insertId)
-            console.log('Add post success')
+
             return res.insertId;
         }catch (error) {
             throw error;
