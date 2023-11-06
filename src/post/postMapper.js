@@ -13,11 +13,15 @@ const postMapper = (dbConnection) => ({
         const SQL = "INSERT INTO mydb.posts (title)" +
             "VALUES (?);";
         try {
-            const res = await dbConnection.query(SQL, post.title);
+            const res = await dbConnection.query({
+                sql: SQL,
+                supportBigNumbers: true,
+                insertIdAsNumber: true,
+            }, post.title);
             // dbConnection.save()
             console.log('res', res, res.insertId)
             console.log('Add post success')
-            return res;
+            return res.insertId;
         }catch (error) {
             throw error;
         }
