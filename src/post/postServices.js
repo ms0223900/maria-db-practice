@@ -1,6 +1,22 @@
 const { postRepo } = require("./postRepo");
 const { postMapper } = require("./postMapper");
 const { Post } = require("./Post");
+
+
+function columnChecker(keys = ['id'], rawData = {}) {
+    const missedKeys = []
+    for (let i = 0; i < keys.length; i++) {
+        const key = keys[i]
+        const val = rawData[key]
+        if(val === undefined || val === null) {
+            missedKeys.push(key);
+        }
+    }
+
+    if(missedKeys.length > 0) {
+        throw new Error(`${missedKeys.join(', ')} required!`)
+    }
+}
 const getPostService = (dbConnection) => {
     const repo = postRepo(
         postMapper(dbConnection)
@@ -18,8 +34,7 @@ const addPostService = (dbConnection) => {
         postMapper(dbConnection)
     )
     async function execute(title) {
-        // TODO, column checker?
-        if(!title) throw new Error('title required')
+        columnChecker(['title'], { title })
 
         const newPost = Post({ title })
         const res = await repo.addPost(newPost)
@@ -35,9 +50,7 @@ const updatePostService = (dbConnection) => {
         postMapper(dbConnection)
     )
     async function execute(id, title) {
-        // TODO, column checker?
-        if(!id) throw new Error('Id required!')
-        if(!title) throw new Error('title required')
+        columnChecker(['id', 'title'], { id, title })
 
         const oldPost = await repo.findById(id)
         // console.log('old', oldPost)
