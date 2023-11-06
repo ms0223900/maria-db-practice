@@ -31,6 +31,14 @@ const postRepo = (mapper) => ({
         } catch (e) {
             throw new Error(e)
         }
+    },
+    async deletePost(id) {
+        try {
+            const res = mapper.deletePost(id)
+            return res
+        } catch (e) {
+            throw new Error(e)
+        }
     }
 })
 

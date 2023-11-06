@@ -1,5 +1,3 @@
-
-
 const deletePostController = (app = require('express')(), service) => {
     app.delete('/post/:id', async (req, res) => {
         try {
@@ -11,4 +9,4 @@ const deletePostController = (app = require('express')(), service) => {
         }
     })
 }
-module.exports = {updatePostController: deletePostController};
+module.exports = {deletePostController};

@@ -40,6 +40,18 @@ const postMapper = (dbConnection) => ({
         }catch (error) {
             throw error;
         }
+    },
+
+    async deletePost(id) {
+        const SQL = "DELETE FROM mydb.posts WHERE id = ?"
+        try {
+            const res = await dbConnection.query(SQL, id);
+            return res;
+        } catch (error) {
+            throw error;
+        } finally {
+            dbConnection.release()
+        }
     }
 })
 module.exports = {postMapper};

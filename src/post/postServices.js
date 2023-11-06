@@ -63,8 +63,22 @@ const updatePostService = (dbConnection) => {
     })
 }
 
+const deletePostService = (dbConnection) => {
+    const repo = postRepo(
+        postMapper(dbConnection)
+    )
+    async function execute(id) {
+        columnChecker(['id'], { id })
+        await repo.deletePost(id)
+        return id
+    }
+    return ({
+        execute,
+    })
+}
 module.exports = {
     getPostService,
     addPostService,
     updatePostService,
+    deletePostService
 }

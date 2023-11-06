@@ -13,6 +13,8 @@ const { addPostController } = require("./src/post/addPostController");
 const { addPostService } = require("./src/post/postServices");
 const { updatePostController } = require("./src/post/updatePostController");
 const { updatePostService } = require("./src/post/postServices");
+const { deletePostController } = require("./src/post/deletePostController");
+const { deletePostService } = require("./src/post/postServices");
 
 const APP_PORT = 3000;
 
@@ -24,6 +26,7 @@ async function main() {
         getPostsController(app, getPostService(conn))
         addPostController(app, addPostService(conn))
         updatePostController(app, updatePostService(conn))
+        deletePostController(app, deletePostService(conn))
     } catch (err) {
         console.log("Error: ", err)
     } finally {
