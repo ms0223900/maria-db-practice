@@ -29,6 +29,21 @@ const getPostService = (dbConnection) => {
         execute,
     })
 }
+
+const getPostByIdService = (dbConnection) => {
+    const repo = postRepo(
+        postMapper(dbConnection)
+    )
+    async function execute(id) {
+        columnChecker(['id'], { id })
+        const res = await repo.findById(id)
+        if(!res) throw new Error('NOT_FOUND')
+        return res
+    }
+    return ({
+        execute,
+    })
+}
 const addPostService = (dbConnection) => {
     const repo = postRepo(
         postMapper(dbConnection)
@@ -78,6 +93,7 @@ const deletePostService = (dbConnection) => {
 }
 module.exports = {
     getPostService,
+    getPostByIdService,
     addPostService,
     updatePostService,
     deletePostService
