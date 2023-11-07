@@ -36,9 +36,9 @@ const postMapper = (dbConnection) => ({
     },
 
     async updatePost(post) {
-        const SQL = "UPDATE mydb.posts t SET t.title = ? WHERE t.id = ?";
+        const SQL = "UPDATE mydb.posts t SET t.title = ?, t.description = ? WHERE t.id = ?";
         try {
-            const res = await dbConnection.query(SQL, [post.title, post.id]);
+            const res = await dbConnection.query(SQL, [post.title, post.description, post.id]);
             return res;
         }catch (error) {
             throw error;

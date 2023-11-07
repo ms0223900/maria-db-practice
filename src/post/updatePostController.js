@@ -7,8 +7,9 @@ const updatePostController = (app = require('express')(), service) => {
             const id = parseInt(req.params.id)
             const {
                 title,
+                description,
             } = req.body
-           const updatedUser = await service.execute(id, title)
+           const updatedUser = await service.execute(id, title, description)
            res.status(201).json(updatedUser)
         } catch (e) {
             // TODO, better error handling

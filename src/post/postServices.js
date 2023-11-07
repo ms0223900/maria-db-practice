@@ -49,12 +49,12 @@ const updatePostService = (dbConnection) => {
     const repo = postRepo(
         postMapper(dbConnection)
     )
-    async function execute(id, title) {
+    async function execute(id, title, description) {
         columnChecker(['id', 'title'], { id, title })
 
         const oldPost = await repo.findById(id)
         // console.log('old', oldPost)
-        const updatedPost = Post({ ...oldPost, title, })
+        const updatedPost = Post({ ...oldPost, title, description })
         await repo.updatePost(updatedPost)
         return updatedPost
     }
