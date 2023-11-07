@@ -5,4 +5,9 @@ const Post = ({ id, title = '', description = '', content = '' }) => ({
     content,
 })
 
-module.exports = { Post }
+const AddPostDbDto = ({ title, description = '', content = '' }) => ({
+    title,
+    description,
+    content,
+})
+module.exports = { Post, AddPostDbDto }

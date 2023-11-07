@@ -18,8 +18,8 @@ const postRepo = (mapper) => ({
     },
     async addPost(post = Post()) {
         try {
-            const res = mapper.addPost(post)
-            return res
+            const newPostId = mapper.addPost(post)
+            return newPostId
         } catch (e) {
             throw new Error(e)
         }

@@ -1,6 +1,6 @@
 const { postRepo } = require("./postRepo");
 const { postMapper } = require("./postMapper");
-const { Post } = require("./Post");
+const { Post, AddPostDbDto } = require("./Post");
 
 
 function columnChecker(keys = ['id'], rawData = {}) {
@@ -49,10 +49,11 @@ const addPostService = (dbConnection) => {
         postMapper(dbConnection)
     )
     async function execute(title, description, content) {
-        columnChecker(['title', 'description', 'content'], { title, description, content })
+        columnChecker(['title'], { title })
 
-        const newPost = Post({ title, description, content })
-        const res = await repo.addPost(newPost)
+        const addPostDbDto = AddPostDbDto({ title, description, content })
+        const newPostId = await repo.addPost(addPostDbDto)
+        const res = Post({ ...addPostDbDto, id: newPostId, })
         return res
     }
     return ({
