@@ -26,6 +26,8 @@ async function main() {
         updatePostController(app, updatePostService(conn))
         deletePostController(app, deletePostService(conn))
         getPostByIdController(app, getPostByIdService(conn))
+
+        
     } catch (err) {
         console.log("Error: ", err)
     } finally {
