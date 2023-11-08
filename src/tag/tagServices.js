@@ -8,6 +8,7 @@ const getPostService = (dbConnection) => {
         const res = await repo.getTags()
         return res
     }
+
     return ({
         execute,
     })
