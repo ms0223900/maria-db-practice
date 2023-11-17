@@ -27,7 +27,8 @@ async function main() {
         deletePostController(app, deletePostService(conn))
         getPostByIdController(app, getPostByIdService(conn))
 
-        
+       // TODO
+       // home api(includes posts and tags...)
     } catch (err) {
         console.log("Error: ", err)
     } finally {
