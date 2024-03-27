@@ -4,7 +4,7 @@ const postMapper = (dbConnection) => ({
         try {
             const res = await dbConnection.query(SQL);
             return res;
-        }catch (error) {
+        } catch (error) {
             throw error;
         }
     },
@@ -20,7 +20,7 @@ const postMapper = (dbConnection) => ({
             }, [post.title, post.description, post.content]);
 
             return res.insertId;
-        }catch (error) {
+        } catch (error) {
             throw error;
         }
     },
@@ -30,7 +30,7 @@ const postMapper = (dbConnection) => ({
         try {
             const res = await dbConnection.query(SQL, id);
             return res[0];
-        }catch (error) {
+        } catch (error) {
             throw error;
         }
     },
@@ -40,7 +40,7 @@ const postMapper = (dbConnection) => ({
         try {
             const res = await dbConnection.query(SQL, [post.title, post.description, post.id]);
             return res;
-        }catch (error) {
+        } catch (error) {
             throw error;
         }
     },
@@ -55,6 +55,6 @@ const postMapper = (dbConnection) => ({
         } finally {
             dbConnection.release()
         }
-    }
+    },
 })
-module.exports = {postMapper};
+module.exports = { postMapper };

@@ -36,7 +36,6 @@ const getPostByIdService = (dbConnection) => {
     })
 }
 
-
 const findPostsByTitleService = (dbConnection) => {
     const repo = postRepo(
         postMapper(dbConnection)
@@ -109,6 +108,24 @@ const deletePostService = (dbConnection) => {
     })
 }
 
+const getPostsByTagId = (dbConnection) => {
+    const repo = postRepo(
+        postMapper(dbConnection)
+    )
+
+    async function execute(id) {
+        columnChecker(['id'], { id })
+        // TODO
+        const posts = repo.getPosts();
+        if (!res) throw new Error('NOT_FOUND')
+        return res
+    }
+
+    return ({
+        execute,
+    })
+}
+
 module.exports = {
     getPostService,
     getPostByIdService,
@@ -116,4 +133,5 @@ module.exports = {
     updatePostService,
     deletePostService,
     findPostsByTitleService,
+    getPostsByTagId,
 }
