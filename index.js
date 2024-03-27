@@ -17,6 +17,8 @@ const { updatePostController } = require("./src/post/updatePostController");
 const { deletePostController } = require("./src/post/deletePostController");
 const { getPostByIdController } = require("./src/post/getPostByIdController");
 const { findPostsByTitleController } = require("./src/post/findPostsByTitleController");
+const { getTagsController } = require("./src/tag/getTagsController");
+const { getTagsService } = require("./src/tag/tagServices");
 
 const APP_PORT = 3000;
 
@@ -31,6 +33,8 @@ async function main() {
         deletePostController(app, deletePostService(conn))
         getPostByIdController(app, getPostByIdService(conn))
         findPostsByTitleController(app, findPostsByTitleService(conn))
+
+        getTagsController(app, getTagsService(conn))
 
         // TODO
         // home api(includes posts and tags...)

@@ -8,4 +8,4 @@ const getTagsController = (app = require('express')(), service) => {
         }
     })
 }
-module.exports = getTagsController;
+module.exports = { getTagsController };
