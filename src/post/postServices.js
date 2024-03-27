@@ -114,12 +114,9 @@ const getPostsByTagIdService = (dbConnection) => {
         postMapper(dbConnection)
     )
 
-    //
-
     async function execute(tagId) {
+        // TODO, refactor
         const postTags = await dbConnection.query("SELECT * FROM mydb.postTags") || [];
-        console.log("postTags: ", postTags);
-        // TODO
         const postIdTagIdsMap = postTags.reduce((prev, next) => {
             if (!prev[next.postId]) {
                 prev[next.postId] = []
@@ -128,14 +125,14 @@ const getPostsByTagIdService = (dbConnection) => {
             return prev;
         }, {});
         const postIdsFoundByTag = postTags.filter(postTag => postTag.tag === tagId).map(pt => pt.postId);
-        console.log("postIdsFoundByTag: ", postIdsFoundByTag);
+
         columnChecker(['id'], { id: tagId })
         const posts = await repo.getPosts();
-        console.log("posts: ", posts);
         const res = posts.map(post => ({
             ...post,
             tags: postIdTagIdsMap[post.id]
         })).filter(post => postIdsFoundByTag.includes(post.id));
+
         if (!res) throw new Error('NOT_FOUND')
         return res
     }
