@@ -8,11 +8,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const getPostsController = require('./src/post/postController')
 
 const db = require('./db')
-const { getPostService, addPostService, updatePostService, deletePostService, getPostByIdService  } = require("./src/post/postServices");
+const {
+    getPostService, addPostService, updatePostService, deletePostService, getPostByIdService,
+    findPostsByTitleService
+} = require("./src/post/postServices");
 const { addPostController } = require("./src/post/addPostController");
 const { updatePostController } = require("./src/post/updatePostController");
 const { deletePostController } = require("./src/post/deletePostController");
 const { getPostByIdController } = require("./src/post/getPostByIdController");
+const { findPostsByTitleController } = require("./src/post/findPostsByTitleController");
 
 const APP_PORT = 3000;
 
@@ -26,9 +30,10 @@ async function main() {
         updatePostController(app, updatePostService(conn))
         deletePostController(app, deletePostService(conn))
         getPostByIdController(app, getPostByIdService(conn))
+        findPostsByTitleController(app, findPostsByTitleService(conn))
 
-       // TODO
-       // home api(includes posts and tags...)
+        // TODO
+        // home api(includes posts and tags...)
     } catch (err) {
         console.log("Error: ", err)
     } finally {
