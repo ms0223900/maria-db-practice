@@ -2,6 +2,7 @@ const { postRepo } = require("./postRepo");
 const { postMapper } = require("./postMapper");
 const { Post, AddPostDbDto } = require("./Post");
 const { columnChecker } = require("../utils");
+const { tagRepo } = require("../tag/tagRepo");
 
 
 const getPostService = (dbConnection) => {
@@ -108,15 +109,33 @@ const deletePostService = (dbConnection) => {
     })
 }
 
-const getPostsByTagId = (dbConnection) => {
+const getPostsByTagIdService = (dbConnection) => {
     const repo = postRepo(
         postMapper(dbConnection)
     )
 
-    async function execute(id) {
-        columnChecker(['id'], { id })
+    //
+
+    async function execute(tagId) {
+        const postTags = await dbConnection.query("SELECT * FROM mydb.postTags") || [];
+        console.log("postTags: ", postTags);
         // TODO
-        const posts = repo.getPosts();
+        const postIdTagIdsMap = postTags.reduce((prev, next) => {
+            if (!prev[next.postId]) {
+                prev[next.postId] = []
+            }
+            prev[next.postId].push(next.tag)
+            return prev;
+        }, {});
+        const postIdsFoundByTag = postTags.filter(postTag => postTag.tag === tagId).map(pt => pt.postId);
+        console.log("postIdsFoundByTag: ", postIdsFoundByTag);
+        columnChecker(['id'], { id: tagId })
+        const posts = await repo.getPosts();
+        console.log("posts: ", posts);
+        const res = posts.map(post => ({
+            ...post,
+            tags: postIdTagIdsMap[post.id]
+        })).filter(post => postIdsFoundByTag.includes(post.id));
         if (!res) throw new Error('NOT_FOUND')
         return res
     }
@@ -133,5 +152,5 @@ module.exports = {
     updatePostService,
     deletePostService,
     findPostsByTitleService,
-    getPostsByTagId,
+    getPostsByTagIdService,
 }

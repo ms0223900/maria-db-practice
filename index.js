@@ -10,7 +10,7 @@ const getPostsController = require('./src/post/postController')
 const db = require('./db')
 const {
     getPostService, addPostService, updatePostService, deletePostService, getPostByIdService,
-    findPostsByTitleService
+    findPostsByTitleService, getPostsByTagIdService
 } = require("./src/post/postServices");
 const { addPostController } = require("./src/post/addPostController");
 const { updatePostController } = require("./src/post/updatePostController");
@@ -27,7 +27,7 @@ async function main() {
     conn = await db.pool.getConnection()
 
     try {
-        getPostsController(app, getPostService(conn))
+        getPostsController(app, getPostService(conn), getPostsByTagIdService(conn))
         addPostController(app, addPostService(conn))
         updatePostController(app, updatePostService(conn))
         deletePostController(app, deletePostService(conn))
