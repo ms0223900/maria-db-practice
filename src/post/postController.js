@@ -1,4 +1,4 @@
-const getPostsController = (app = require('express')(), service, getPostsByTagIdService) => {
+const getPostsController = (app = require('express')(), getPostsService, getPostsByTagIdService) => {
     app.get('/posts', async (req, res) => {
         try {
             // TODO
@@ -9,7 +9,7 @@ const getPostsController = (app = require('express')(), service, getPostsByTagId
                 res.send(posts)
                 return
             }
-            const posts = await service.execute()
+            const posts = await getPostsService.execute()
             res.send(posts)
         } catch (e) {
             res.status(500).json(e)

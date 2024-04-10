@@ -5,11 +5,7 @@ const { columnChecker } = require("../utils");
 const { tagRepo } = require("../tag/tagRepo");
 
 
-const getPostService = (dbConnection) => {
-    const repo = postRepo(
-        postMapper(dbConnection)
-    )
-
+const getPostService = (repo) => {
     async function execute() {
         const res = await repo.getPosts()
         return res
@@ -109,11 +105,7 @@ const deletePostService = (dbConnection) => {
     })
 }
 
-const getPostsByTagIdService = (dbConnection) => {
-    const repo = postRepo(
-        postMapper(dbConnection)
-    )
-
+const getPostsByTagIdService = (repo) => {
     async function execute(tagId) {
         // TODO, refactor
         const postTags = await dbConnection.query("SELECT * FROM mydb.postTags") || [];

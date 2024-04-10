@@ -19,6 +19,8 @@ const { getPostByIdController } = require("./src/post/getPostByIdController");
 const { findPostsByTitleController } = require("./src/post/findPostsByTitleController");
 const { getTagsController } = require("./src/tag/getTagsController");
 const { getTagsService } = require("./src/tag/tagServices");
+const { postRepo } = require("./src/post/postRepo");
+const { postMapper } = require("./src/post/postMapper");
 
 const APP_PORT = 3000;
 
@@ -27,7 +29,7 @@ async function main() {
     conn = await db.pool.getConnection()
 
     try {
-        getPostsController(app, getPostService(conn), getPostsByTagIdService(conn))
+        getPostsController(app, getPostService(postRepo(postMapper(conn))), getPostsByTagIdService(postRepo(postMapper(conn))))
         addPostController(app, addPostService(conn))
         updatePostController(app, updatePostService(conn))
         deletePostController(app, deletePostService(conn))
