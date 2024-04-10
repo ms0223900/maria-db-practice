@@ -1,7 +1,7 @@
 const getPostsController = require("./postController");
 const { Post } = require("./Post");
 
-jest.useFakeTimers();
+// 以下僅為 controller 和 service 外圍之測試，並沒有真的塞資料到 db 層
 describe('post controller', function () {
     function givenApp(req = {}) {
         const spySend = jest.fn();
@@ -50,11 +50,16 @@ describe('post controller', function () {
 
     it('all ok when no req', async () => {
         const { spySend, app } = givenApp();
-        const getPostsService = givenPostService();
-        const postsByTagIdService = givenPostsByTagIdService();
+        const response = [
+            Post({ id: 0 }),
+            Post({ id: 1 }),
+            Post({ id: 2 }),
+        ];
+        const getPostsService = givenPostService(response);
+        const postsByTagIdService = givenPostsByTagIdService([]);
 
         await getPostsController(app(), getPostsService(), postsByTagIdService())
-        await expect(spySend).toHaveBeenCalled()
+        await expect(spySend).toBeCalledWith(response)
     });
 
     it('all ok when req query have tag', async () => {
