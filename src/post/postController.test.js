@@ -3,7 +3,7 @@ const { Post } = require("./Post");
 
 jest.useFakeTimers();
 describe('post controller', function () {
-    it('all ok', async () => {
+    function givenApp() {
         let req = {};
         const spySend = jest.fn();
         const res = {
@@ -17,29 +17,44 @@ describe('post controller', function () {
                 await cb(req, res)
             }
         })
+        return { spySend, app };
+    }
+
+    function givenPostService(response = [
+        Post({
+            id: 0,
+        })
+    ]) {
         const getPostsService = jest.fn();
         getPostsService.mockReturnValue({
             execute() {
-                return Promise.resolve([
-                    Post({
-                        id: 0,
-                    })
-                ]);
+                return Promise.resolve(response);
             }
         })
+        return getPostsService;
+    }
+
+    function givenPostsByTagIdService(response = [
+        Post({
+            id: 0,
+        }),
+        Post({
+            id: 1,
+        })
+    ]) {
         const getPostsByTagIdService = jest.fn();
         getPostsByTagIdService.mockReturnValue({
             execute() {
-                return [
-                    Post({
-                        id: 0,
-                    }),
-                    Post({
-                        id: 1,
-                    })
-                ];
+                return response;
             }
         })
+        return getPostsByTagIdService;
+    }
+
+    it('all ok', async () => {
+        const { spySend, app } = givenApp();
+        const getPostsService = givenPostService();
+        const postsByTagIdService = givenPostsByTagIdService();
 
         await getPostsController(app(), getPostsService())
         await expect(spySend).toHaveBeenCalled()
