@@ -1,8 +1,8 @@
 const getPostsController = (app = require('express')(), getPostsService, getPostsByTagIdService) => {
-    app.get('/posts', async (req, res) => {
+    return app.get('/posts', async (req, res) => {
         try {
             // TODO
-            if (req.query.tag) {
+            if (req.query?.tag) {
                 const tagId = Number(req.query.tag);
                 // TODO, 驗證 tagId？
                 const posts = await getPostsByTagIdService.execute(tagId);
